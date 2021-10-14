@@ -1,6 +1,3 @@
-# Simple docker-composer.yml
-# You can change your port or volume location
-
 version: '3.3'
 
 services:
@@ -11,3 +8,14 @@ services:
       - ./uptime-kuma:/app/data
     ports:
       - 3001:3001
+    volumes:
+      - './uptime-kuma:/app/data'
+    environment:
+      PORT: 3001
+      VIRTUAL_HOST: ${UPTIME_DOMAIN}
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
